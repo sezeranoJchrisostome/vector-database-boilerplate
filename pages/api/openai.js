@@ -1,9 +1,8 @@
-// file: /pages/api/openai.js
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { SupabaseVectorStore } from "langchain/vectorstores/supabase";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { OpenAI } from "langchain/llms/openai";
-import { Configuration, OpenAIApi } from "openai";
+import { Configuration } from "openai";
 import { supabase } from "@/utils/supabase";
 
 // Create a configuration object with the OpenAI API key
@@ -31,7 +30,9 @@ export default async function (req, res) {
   // Extract the payload from the request body
   const question = req.body.payload || "";
 
+  // Set up the model with a specific model name
   const model = new OpenAI({
+    modelName: "gpt-3.5-turbo",  // Explicitly set the model name here
     temperature: 1,
     openAIApiKey: process.env.OPENAI_API_KEY,
     streaming: false,
